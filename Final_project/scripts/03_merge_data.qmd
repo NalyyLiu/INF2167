@@ -1,0 +1,84 @@
+---
+title: "03 Merge Data"
+format: html
+editor: visual
+---
+
+# Overview
+
+**Purpose**
+
+Merge the cleaned health expenditure and life expectancy datasets into a single country-year dataset for exploratory data analysis and proposal development.
+
+**Date**
+
+15/06/2026
+
+**Input**
+
+-   data/analysis/health_expenditure_clean.csv
+
+-   data/analysis/life_expectancy_clean.csv
+
+**Output**
+
+-   data/analysis/health_life_merged.csv
+
+**Research Question**
+
+How does government healthcare expenditure relate to life expectancy across countries between 2007 and 2017?
+
+**Unit of Analysis**
+
+Country-year observations.
+
+**Notes**
+
+This script combines the two cleaned datasets using country identifiers and year information. Only observations that appear in both datasets are retained in the final merged dataset through an inner join. The resulting dataset contains the two primary variables used in this project: government healthcare expenditure (% GDP) and life expectancy (years). Creating a merged country-year dataset is necessary for conducting exploratory data analysis, generating visualizations, and examining the relationship between healthcare spending and health outcomes in the project proposal and final report.\
+
+```{r}
+# Load Packages
+library(tidyverse)
+library(here)
+```
+
+```{r}
+# Load cleaned datasets
+health_clean <- read_csv(
+  here("final_project", "data", "analysis", "health_expenditure_clean.csv")
+)
+
+life_clean <- read_csv(
+  here("final_project", "data", "analysis", "life_expectancy_clean.csv")
+)
+```
+
+```{r}
+# Merge by country code, country name, and year
+merged_data <- life_clean |>
+  inner_join(
+    health_clean,
+    by = c("country_code", "country", "year")
+  )
+
+glimpse(merged_data)
+```
+
+```{r}
+# Check number of countries and date range after merging
+merged_data |>
+  summarize(
+    number_of_rows = n(),
+    number_of_countries = n_distinct(country),
+    start_year = min(year),
+    end_year = max(year)
+  )
+```
+
+```{r}
+# Save final merged dataset
+write_csv(
+  merged_data,
+  here("final_project", "data", "analysis", "health_life_merged.csv")
+)
+```

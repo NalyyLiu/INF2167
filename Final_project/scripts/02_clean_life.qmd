@@ -1,0 +1,74 @@
+---
+title: "02 Clean Life Expectancy Data"
+format: html
+editor: visual
+---
+
+# Overview
+
+**Purpose**
+
+Clean the WEF Life Expectancy dataset and prepare a standardized life expectancy dataset for analysis. This script removes unnecessary observations, retains variables relevant to the research question, and creates a cleaned dataset that can be merged with the healthcare expenditure data.
+
+**Date**
+
+15/06/2026
+
+**Input**
+
+-   data/raw/WEF_life_expectancy_raw.csv
+
+**Output**
+
+-   data/analysis/life_expectancy_clean.csv
+
+**Research Question**
+
+How does government healthcare expenditure relate to life expectancy across countries between 2007 and 2017?
+
+**Unit of Analysis**
+
+Country-year observations.
+
+**Notes**
+
+The raw dataset contains both life expectancy values and ranking measures. This script retains only observations measured in years, removes ranking observations, selects variables relevant to the project, and restricts the data to the study period (2007–2017). The resulting cleaned dataset will be merged with the government healthcare expenditure dataset in a later step of the workflow.
+
+```{r}
+# Load Packages
+library(tidyverse)
+library(here)
+```
+
+```{r}
+# Load raw WEF life expectancy data
+life_raw <- read_csv(
+  here("final_project", "data", "raw", "WEF_GCIHH_LIFEEXPECT.csv")
+)
+
+glimpse(life_raw)
+```
+
+```{r}
+# Keep only life expectancy values measured in years, not rank
+life_clean <- life_raw |>
+  filter(UNIT_MEASURE == "YR") |>
+  select(
+    country_code = REF_AREA,
+    country = REF_AREA_LABEL,
+    year = TIME_PERIOD,
+    life_expectancy = OBS_VALUE
+  ) |>
+  filter(year >= 2007, year <= 2017) |>
+  arrange(country, year)
+
+glimpse(life_clean)
+```
+
+```{r}
+# Save cleaned life expectancy dataset
+write_csv(
+  life_clean,
+  here("final_project", "data", "analysis", "life_expectancy_clean.csv")
+)
+```

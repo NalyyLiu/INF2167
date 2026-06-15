@@ -1,0 +1,74 @@
+---
+title: "01 Clean Health Expenditure Data"
+format: html
+editor: visual
+---
+
+# Overview
+
+**Purpose**
+
+Clean the IMF Government Expenditure on Health dataset and prepare a standardized health expenditure dataset for analysis. This script filters relevant observations, selects variables needed for the project, and creates a cleaned dataset that can be merged with the life expectancy data.
+
+**Date**
+
+15/06/2026
+
+**Input**
+
+-   data/raw/IMF_health_expenditure_raw.csv
+
+**Output**
+
+-   data/analysis/health_expenditure_clean.csv
+
+**Research Question**
+
+How does government healthcare expenditure relate to life expectancy across countries between 2007 and 2017?
+
+**Unit of Analysis**
+
+Country-year observations.
+
+**Notes**
+
+This script retains observations measured as government health expenditure (% GDP), which allows for meaningful comparisons across countries. Variables unrelated to the research question are removed, and the dataset is restricted to the study period (2007–2017). The cleaned dataset serves as one of the primary inputs for the merged analytical dataset used in the exploratory data analysis and proposal.
+
+```{r}
+# Load Packages
+library(tidyverse)
+library(here)
+```
+
+```{r}
+# Load raw IMF health expenditure data
+health_raw <- read_csv(
+  here("final_project", "data", "raw", "IMF_COFOG_GEL_GF07.csv")
+)
+
+glimpse(health_raw)
+```
+
+```{r}
+# Keep only country-year observations measured as percentage of GDP
+health_clean <- health_raw |>
+  filter(UNIT_MEASURE == "PT_GDP") |>
+  select(
+    country_code = REF_AREA,
+    country = REF_AREA_LABEL,
+    year = TIME_PERIOD,
+    health_expenditure_gdp = OBS_VALUE
+  ) |>
+  filter(year >= 2007, year <= 2017) |>
+  arrange(country, year)
+
+glimpse(health_clean)
+```
+
+```{r}
+# Save cleaned health expenditure dataset
+write_csv(
+  health_clean,
+  here("final_project", "data", "analysis", "health_expenditure_clean.csv")
+)
+```

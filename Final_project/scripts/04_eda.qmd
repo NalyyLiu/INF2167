@@ -1,0 +1,120 @@
+---
+title: "04 Exploratory Data Analysis"
+format: html
+editor: visual
+---
+
+# Overview
+
+**Purpose**
+
+Conduct exploratory data analysis (EDA) on the merged healthcare expenditure and life expectancy dataset. This script generates summary statistics and visualizations to examine the distributions of the main variables and explore their relationship.
+
+**Date**
+
+15/06/2026
+
+**Input**
+
+-   data/analysis/health_life_merged.csv
+
+**Output**
+
+-   Descriptive statistics
+
+-   Distribution plots
+
+-   Scatterplot of healthcare expenditure and life expectancy
+
+-   Time-series visualization of average life expectancy
+
+**Research Question**
+
+How does government healthcare expenditure relate to life expectancy across countries between 2007 and 2017?
+
+**Unit of Analysis**
+
+Country-year observations.
+
+**Notes**
+
+This script explores the key variables used in the project and provides preliminary evidence relevant to the research question. The analysis focuses on identifying patterns, distributions, trends, and potential relationships between government healthcare expenditure and life expectancy. Results from this exploratory analysis will inform the interpretation and discussion presented in the project proposal.
+
+```{r}
+# Load Packages
+library(tidyverse)
+library(here)
+```
+
+```{r}
+# Load final merged dataset
+merged_data <- read_csv(
+  here("final_project", "data", "analysis", "health_life_merged.csv")
+)
+
+glimpse(merged_data)
+```
+
+```{r}
+# Descriptive statistics
+merged_data |>
+  summarize(
+    mean_life_expectancy = mean(life_expectancy, na.rm = TRUE),
+    median_life_expectancy = median(life_expectancy, na.rm = TRUE),
+    mean_health_expenditure = mean(health_expenditure_gdp, na.rm = TRUE),
+    median_health_expenditure = median(health_expenditure_gdp, na.rm = TRUE)
+  )
+```
+
+```{r}
+# Graph 1: Distribution of life expectancy
+merged_data |>
+  ggplot(aes(x = life_expectancy)) +
+  geom_histogram(bins = 30) +
+  labs(
+    title = "Distribution of Life Expectancy",
+    x = "Life expectancy (years)",
+    y = "Number of country-year observations"
+  )
+```
+
+```{r}
+# Graph 2: Distribution of government health expenditure
+merged_data |>
+  ggplot(aes(x = health_expenditure_gdp)) +
+  geom_histogram(bins = 30) +
+  labs(
+    title = "Distribution of Government Health Expenditure",
+    x = "Government health expenditure (% of GDP)",
+    y = "Number of country-year observations"
+  )
+```
+
+```{r}
+# Graph 3: Health expenditure and life expectancy
+merged_data |>
+  ggplot(aes(x = health_expenditure_gdp, y = life_expectancy)) +
+  geom_point(alpha = 0.5) +
+  labs(
+    title = "Government Health Expenditure and Life Expectancy",
+    x = "Government health expenditure (% of GDP)",
+    y = "Life expectancy (years)"
+  )
+```
+
+```{r}
+# Graph 4: Average life expectancy over time
+merged_data |>
+  group_by(year) |>
+  summarize(
+    mean_life_expectancy = mean(life_expectancy, na.rm = TRUE)
+  ) |>
+  ggplot(aes(x = year, y = mean_life_expectancy)) +
+  geom_line() +
+  geom_point() +
+  labs(
+    title = "Average Life Expectancy Over Time",
+    x = "Year",
+    y = "Average life expectancy (years)"
+  )
+```
