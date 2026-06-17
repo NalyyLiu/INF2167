@@ -6,6 +6,28 @@ editor: visual
 bibliography: references.bib
 ---
 
+## Research Question and Hypotheses
+
+Health is a fundamental part of human well-being and an important concern for individuals, governments, and public policy. The World Health Organization defines health as “a state of complete physical, mental and social well-being and not merely the absence of disease or infirmity” [@who_health_definition]. However, health outcomes are shaped by many factors, including income, education, social and physical environments, and access to health services [@canada_health_determinants]. Therefore, understanding how public healthcare investment relates to population health outcomes is an important question.
+
+### Research Question
+
+This project examines the relationship between government healthcare expenditure and life expectancy across countries between 2007 and 2017. Our main research question is:
+
+**How does government healthcare expenditure relate to life expectancy across countries between 2007 and 2017?**
+
+In this project, we use life expectancy as a broad measure of population health because it reflects how long people are expected to live under current mortality conditions. We focus on government healthcare expenditure as a percentage of GDP because it reflects the share of national economic resources that governments allocate to healthcare systems. Together, these two variables allow us to explore whether countries that devote a larger share of GDP to public healthcare tend to have better population health outcomes.
+
+### Hypotheses
+
+Based on this research question, our main hypothesis is:
+
+**H1: Countries with higher government healthcare expenditure as a percentage of GDP tend to have higher life expectancy.**
+
+This hypothesis is based on the expectation that greater public healthcare spending may improve access to healthcare services, disease prevention, treatment quality, and overall health system capacity. These improvements may contribute to better population health outcomes and longer life expectancy.
+
+However, we also recognize that life expectancy is influenced by many factors beyond healthcare expenditure, including income levels, education, sanitation, nutrition, lifestyle, and healthcare system efficiency. Therefore, this project examines the association between healthcare expenditure and life expectancy, rather than claiming a direct causal relationship.
+
 ## Dataset and Methods
 
 ### Dataset
