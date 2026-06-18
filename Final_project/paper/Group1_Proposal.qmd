@@ -7,15 +7,19 @@ author:
   - "Shawn Li 1010790324"
 date: "06/18/2026"
 date-format: long
-format: pdf
+format:
+  pdf:
+    template-partials:
+      - before-body.tex
+    fig-align: center
+    geometry: margin=1in
 execute:
   warning: false
 editor: visual
 bibliography: references.bib
 ---
 
-\newpage
-
+ 
 ## Research Question and Hypotheses
 
 Health is a fundamental part of human well-being and an important concern for individuals, governments, and public policy. The World Health Organization defines health as “a state of complete physical, mental and social well-being and not merely the absence of disease or infirmity” [@health_definition]. However, health outcomes are shaped by many factors, including income, education, social and physical environments, and access to health services [@health_definition]. Therefore, understanding how public healthcare investment relates to population health outcomes is an important question.
@@ -38,7 +42,7 @@ This hypothesis is based on the expectation that greater public healthcare spend
 
 However, we also recognize that life expectancy is influenced by many factors beyond healthcare expenditure, including income levels, education, sanitation, nutrition, lifestyle, and healthcare system efficiency. Therefore, this project examines the association between healthcare expenditure and life expectancy, rather than claiming a direct causal relationship.
 
-## Relevant Literature 
+## Relevant Literature
 
 Previous research suggests that government healthcare expenditure is related to life expectancy, but this relationship is not always simple. Onofrei et al. [-@onofrei2021] examined public health expenditure and public health outcomes among developing European Union countries. Their study found a long-run relationship between public health expenditure and health outcomes, and showed that public health spending can help improve life expectancy and reduce infant mortality. This supports our hypothesis that countries with higher government healthcare expenditure may also have higher life expectancy.
 
@@ -76,24 +80,39 @@ The dataset shows substantial variation in both variables. Life expectancy range
 
 Figure 1 shows the distribution of life expectancy across all country-year observations. Most observations fall between approximately 65 and 85 years, with a large concentration around 75–83 years. However, there are a small number of observations below 60 years, indicating substantial differences in health outcomes across countries. This variation suggests that life expectancy may be influenced by broader social and economic factors, making it a useful outcome variable for this study.
 
-![](images/clipboard-2283688776.png)
+\begin{center}
+\includegraphics[width=0.5\textwidth]{images/clipboard-2283688776.png}
+\end{center}
 
 ### Figure 2: Distribution of Government Health Expenditure
 
 Figure 2 presents the distribution of government healthcare expenditure as a percentage of GDP. The distribution is strongly right-skewed, with many observations concentrated at lower levels of spending and fewer countries reporting very high levels of expenditure. This suggests considerable variation in how governments allocate resources to healthcare. Such variation provides an opportunity to examine whether differences in spending are associated with differences in life expectancy.
 
-![](images/clipboard-3082075015.png)
+\begin{center}
+\includegraphics[width=0.5\textwidth]{images/clipboard-3082075015.png}
+\end{center}
 
 ### Figure 3: Relationship Between Government Health Expenditure and Life Expectancy
 
 Figure 3 shows the relationship between government healthcare expenditure and life expectancy. A general positive association can be observed, as countries with higher healthcare expenditure tend to have higher life expectancy. However, the relationship is not perfectly linear. Some countries with similar levels of expenditure display different life expectancy outcomes, suggesting that factors beyond healthcare spending may also influence population health. However, the overall pattern provides preliminary support for our hypothesis that higher healthcare expenditure is associated with longer life expectancy.
 
-![](images/clipboard-163625473.png)
+\begin{center}
+\includegraphics[width=0.5\textwidth]{images/clipboard-163625473.png}
+\end{center}
 
 ### Figure 4: Average Life Expectancy Over Time
 
 Figure 4 illustrates the average life expectancy across all countries from 2007 to 2017. The trend shows a gradual increase over time, rising from approximately 73.7 years in 2007 to over 76 years in 2017. This suggests that global health outcomes improved during the study period. Because life expectancy increased over time, temporal factors may also play a role in explaining health outcomes and should be considered when interpreting the relationship between healthcare expenditure and life expectancy.
 
-![](images/clipboard-2835129263.png)
+\begin{center}
+\includegraphics[width=0.5\textwidth]{images/clipboard-2835129263.png}
+\end{center}
 
 Overall, the exploratory analysis reveals substantial variation in both healthcare expenditure and life expectancy across countries. The scatterplot suggests a positive relationship between the two variables, while the time-series analysis indicates that life expectancy generally improved between 2007 and 2017. These findings provide initial evidence that healthcare spending may be associated with population health outcomes and justify further investigation in the final project.
+
+\newpage
+
+## References
+
+::: {#refs}
+:::
