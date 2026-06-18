@@ -8,7 +8,7 @@ bibliography: references.bib
 
 ## Research Question and Hypotheses
 
-Health is a fundamental part of human well-being and an important concern for individuals, governments, and public policy. The World Health Organization defines health as “a state of complete physical, mental and social well-being and not merely the absence of disease or infirmity” [@who_health_definition]. However, health outcomes are shaped by many factors, including income, education, social and physical environments, and access to health services [@canada_health_determinants]. Therefore, understanding how public healthcare investment relates to population health outcomes is an important question.
+Health is a fundamental part of human well-being and an important concern for individuals, governments, and public policy. The World Health Organization defines health as “a state of complete physical, mental and social well-being and not merely the absence of disease or infirmity” [@health_definition]. However, health outcomes are shaped by many factors, including income, education, social and physical environments, and access to health services [@health_determinants]. Therefore, understanding how public healthcare investment relates to population health outcomes is an important question.
 
 ### Research Question
 
