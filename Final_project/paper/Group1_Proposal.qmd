@@ -4,7 +4,7 @@ subtitle: "INF2167 - R for Data Science"
 author:
   - "Naly Liu 1007253482"
   - "Jiarui Guo 1007086886"
-  - "Shawn Li "
+  - "Shawn Li 1010790324"
 date: "06/18/2026"
 date-format: long
 format: pdf
@@ -37,6 +37,16 @@ Based on this research question, our main hypothesis is:
 This hypothesis is based on the expectation that greater public healthcare spending may improve access to healthcare services, disease prevention, treatment quality, and overall health system capacity. These improvements may contribute to better population health outcomes and longer life expectancy.
 
 However, we also recognize that life expectancy is influenced by many factors beyond healthcare expenditure, including income levels, education, sanitation, nutrition, lifestyle, and healthcare system efficiency. Therefore, this project examines the association between healthcare expenditure and life expectancy, rather than claiming a direct causal relationship.
+
+## Relevant Literature 
+
+Previous research suggests that government healthcare expenditure is related to life expectancy, but this relationship is not always simple. Onofrei et al. [-@onofrei2021] examined public health expenditure and public health outcomes among developing European Union countries. Their study found a long-run relationship between public health expenditure and health outcomes, and showed that public health spending can help improve life expectancy and reduce infant mortality. This supports our hypothesis that countries with higher government healthcare expenditure may also have higher life expectancy.
+
+However, healthcare expenditure does not always produce the same health outcomes across countries. Balkhi et al. [-@balkhi2021] studied healthcare expenditures and healthcare outcomes in the Middle East and North Africa region from 1995 to 2015. Their study found that higher healthcare spending was not always linked to better outcomes in every country. This is important for our project because it shows that spending level alone may not fully explain life expectancy. The effect of healthcare expenditure may depend on how resources are allocated and how healthcare systems are organized.
+
+Roffia et al. [-@roffia2023] also show that life expectancy is shaped by multiple factors, not only healthcare expenditure. Their longitudinal study of OECD countries found that healthcare resources, social spending, economic conditions, and demographic factors can all influence life expectancy. This helps us frame healthcare expenditure as one important factor, while recognizing that it cannot fully explain differences in life expectancy by itself.
+
+Together, these studies show that government healthcare expenditure is an important factor in public health outcomes, but the relationship is complex. The existing literature focuses mainly on specific groups of countries, such as developing EU countries, the MENA region, or OECD countries. Our project adds to this work by using World Bank Data360 country-level data to examine the relationship between government healthcare expenditure and life expectancy across a broader set of countries between 2007 and 2017. By using descriptive statistics and visualizations, this project provides a clearer cross-country overview of whether countries with higher government healthcare expenditure tend to report higher life expectancy.
 
 ## Dataset and Methods
 
