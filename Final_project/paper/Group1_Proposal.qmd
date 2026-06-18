@@ -1,14 +1,24 @@
 ---
-title: "Group1 Proposal"
-format: html
+title: "Group1 - Project Proposal"
+subtitle: "INF2167 - R for Data Science"
+author:
+  - "Naly Liu 1007253482"
+  - "Jiarui Guo 1007086886"
+  - "Shawn Li "
+date: "06/18/2026"
+date-format: long
+format: pdf
+execute:
+  warning: false
 editor: visual
-
 bibliography: references.bib
 ---
 
+\newpage
+
 ## Research Question and Hypotheses
 
-Health is a fundamental part of human well-being and an important concern for individuals, governments, and public policy. The World Health Organization defines health as “a state of complete physical, mental and social well-being and not merely the absence of disease or infirmity” [@health_definition]. However, health outcomes are shaped by many factors, including income, education, social and physical environments, and access to health services [@health_determinants]. Therefore, understanding how public healthcare investment relates to population health outcomes is an important question.
+Health is a fundamental part of human well-being and an important concern for individuals, governments, and public policy. The World Health Organization defines health as “a state of complete physical, mental and social well-being and not merely the absence of disease or infirmity” [@health_definition]. However, health outcomes are shaped by many factors, including income, education, social and physical environments, and access to health services [@health_definition]. Therefore, understanding how public healthcare investment relates to population health outcomes is an important question.
 
 ### Research Question
 
@@ -40,7 +50,7 @@ The dataset includes substantial variation across countries and over time, makin
 
 ### Methods
 
-This project will use exploratory and descriptive data analysis to examine the relationship between government healthcare expenditure and life expectancy. Summary statistics, including measures of central tendency and distribution, will be used to understand the characteristics of the dataset. Data cleaning, merging, and visualization were conducted in R using the tidyverse package collection [@RCoreTeam; @wickham2019].
+This project will use exploratory and descriptive data analysis to examine the relationship between government healthcare expenditure and life expectancy. Summary statistics, including measures of central tendency and distribution, will be used to understand the characteristics of the dataset. Data cleaning, merging, and visualization were conducted in R using the tidyverse package collection [@RCoreTeam; @wickham2019]. Reproducible file paths were managed using the here package [@here].
 
 Several visualizations will be created to explore patterns in the data. Histograms will be used to examine the distributions of healthcare expenditure and life expectancy. A scatterplot will be used to investigate the relationship between the two variables and assess whether countries with higher healthcare expenditure tend to have higher life expectancy. A line graph will also be used to examine changes in average life expectancy over time.
 
