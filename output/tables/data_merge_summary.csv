@@ -1,0 +1,6 @@
+stage,observations,countries
+Clean health expenditure data,673,75
+Clean life expectancy data,1524,152
+Clean GDP per capita data,2301,211
+Health and life expectancy merged,601,64
+Final complete-case analysis data,601,64

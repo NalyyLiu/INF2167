@@ -1,0 +1,88 @@
+---
+title: "Government Health Expenditure and Life Expectancy"
+author:
+  - "Naly Liu 1007253482"
+  - "Shawn Li"
+  - "Jiarui Guo"
+format:
+  pdf:
+    documentclass: article
+editor: visual
+bibliography: references.bib
+---
+
+# Abstract
+
+# Introduction
+
+# Relevant Literature
+
+# Research Question and Hypotheses
+
+# Dataset and Methods
+
+## Dataset
+
+This study combines three international datasets to examine the relationship between government healthcare expenditure and life expectancy across countries between 2007 and 2017.
+
+The primary independent variable was obtained from the World Bank Data360 platform using the International Monetary Fund (IMF) Government Finance Statistics indicator **IMF_COFOG_GEL_GF07 (Government Expenditure on Health)**, which measures government healthcare expenditure as a percentage of GDP. The dependent variable was obtained from the World Bank Data360 indicator **WEF_GCIHH_LIFEEXPECT**, which reports life expectancy in years. To account for differences in national economic development, GDP per capita was obtained from the World Bank World Development Indicators (WDI) dataset using indicator **WB_WDI_NY_GDP_PCAP_CD**. In addition, a regional classification variable was generated from ISO3 country codes using the `countrycode` R package.
+
+Each observation in the final dataset represents a country-year. After cleaning and merging the three datasets by ISO3 country code and year, the final analytical dataset contained **601 country-year observations across 64 countries** covering the period from **2007 to 2017**.
+
+## Data Preparation
+
+The three datasets were processed using reproducible R scripts. The historical Government Health Expenditure dataset (IMF_COFOG_GEL_GF07) was originally downloaded during the project proposal stage. During preparation of the final project, we attempted to reproduce the download using the current World Bank Data360 platform and the IMF Government Finance Statistics (GFS) Data Explorer. However, the historical 2007–2017 observations are no longer publicly available. Following instructor approval, the archived CSV downloaded during the proposal stage was used, while all retrieval steps and verification procedures were documented in the project repository.
+
+Each dataset was cleaned separately before merging. Data preparation included restricting all datasets to the study period (2007–2017), selecting variables required for the analysis, standardizing country identifiers using ISO3 country codes, removing duplicate country-year observations, removing missing values, and excluding aggregate economies and non-country entities. GDP per capita was additionally transformed using the natural logarithm because the original variable was highly right-skewed. A region variable was generated from ISO3 country codes using the `countrycode` package.
+
+The cleaned datasets were merged by country code and year. A complete-case dataset was then created by retaining only observations with complete information for all variables included in the regression analysis.
+
+## Methods
+
+The analysis consisted of descriptive statistics, exploratory data visualization, and multiple linear regression.
+
+Descriptive statistics were first calculated to summarize the distributions of government healthcare expenditure, life expectancy, and GDP per capita. Scatterplots and other exploratory visualizations were then used to examine the relationship between healthcare expenditure and life expectancy.
+
+To evaluate the research question while controlling for potential confounding factors, a multiple linear regression model was estimated:
+
+$$
+LifeExpectancy_i
+=
+\beta_0
++
+\beta_1 HealthExpenditure_i
++
+\beta_2 \log(GDPPerCapita_i)
++
+\beta_3 Region_i
++
+\varepsilon_i
+$$
+
+where:
+
+-   $LifeExpectancy_i$ represents life expectancy (years);
+-   $HealthExpenditure_i$ represents government healthcare expenditure as a percentage of GDP;
+-   $\log(GDPPerCapita_i)$ is the natural logarithm of GDP per capita;
+-   $Region_i$ is a categorical variable representing geographic regions; and
+-   $\varepsilon_i$ is the random error term.
+
+Government healthcare expenditure was included as the primary explanatory variable because it directly reflects public investment in healthcare. GDP per capita was included as a control variable because countries with higher income levels generally have both greater healthcare resources and longer life expectancy. Region was included to account for geographic differences in healthcare systems, economic development, and population characteristics that may influence life expectancy independently of government healthcare expenditure.
+
+## Limitations
+
+Although GDP per capita and region were included as additional explanatory variables, life expectancy is influenced by many other factors, including education, healthcare system quality, demographic characteristics, lifestyle behaviours, and public health policies. These variables were not available in the current analysis and therefore were not included in the regression model. Consequently, the estimated relationships should be interpreted as statistical associations rather than causal effects. In addition, the historical Government Health Expenditure dataset (2007–2017) is no longer publicly available through the current World Bank Data360 platform, and this project therefore relies on an archived version of the dataset that was downloaded during the proposal stage.
+
+Table 1. Summary of the data preparation process.
+
+| Stage                             | Observations | Countries |
+|:----------------------------------|-------------:|----------:|
+| Clean health expenditure data     |          673 |        75 |
+| Clean life expectancy data        |         1524 |       152 |
+| Clean GDP per capita data         |         2301 |       211 |
+| Health and life expectancy merged |          601 |        64 |
+| Final complete-case analysis data |      **601** |    **64** |
+
+# Results and Findings
+
+# Discussion and Conclusion
