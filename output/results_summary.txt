@@ -1,0 +1,94 @@
+INF2167 Final Project: Regression Results
+Observations: 601 | Countries: 64 
+
+SUMMARY STATISTICS
+                variable   n     mean       sd     min   median       max
+1         gdp_per_capita 601 29355.63 24756.37 1022.62 22405.64 123678.71
+2 health_expenditure_gdp 601     5.10     2.28    0.36     5.20      9.30
+3        life_expectancy 601    76.74     5.52   51.00    78.74     84.28
+4     log_gdp_per_capita 601     9.83     1.08    6.93    10.02     11.73
+
+
+MODEL 1: life_expectancy ~ health_expenditure_gdp
+
+Call:
+lm(formula = life_expectancy ~ health_expenditure_gdp, data = model_data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-24.0625  -2.4008   0.3298   2.5118  10.2543 
+
+Coefficients:
+                       Estimate Std. Error t value Pr(>|t|)    
+(Intercept)            70.46041    0.47534  148.23   <2e-16 ***
+health_expenditure_gdp  1.23146    0.08513   14.47   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 4.754 on 599 degrees of freedom
+Multiple R-squared:  0.2589,	Adjusted R-squared:  0.2577 
+F-statistic: 209.3 on 1 and 599 DF,  p-value: < 2.2e-16
+
+
+
+MODEL 2: + log_gdp_per_capita + region + year_c
+
+Call:
+lm(formula = life_expectancy ~ health_expenditure_gdp + log_gdp_per_capita + 
+    region + year_c, data = model_data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-12.6297  -1.1102   0.0359   1.2903   9.9728 
+
+Coefficients:
+                                 Estimate Std. Error t value Pr(>|t|)    
+(Intercept)                      37.21855    1.22397  30.408  < 2e-16 ***
+health_expenditure_gdp            0.09211    0.07069   1.303   0.1931    
+log_gdp_per_capita                3.85367    0.14013  27.500  < 2e-16 ***
+regionEast Asia & Pacific         1.45150    0.34375   4.223 2.80e-05 ***
+regionLatin America & Caribbean   1.41586    0.72586   1.951   0.0516 .  
+regionMiddle East & North Africa  2.19096    0.50334   4.353 1.58e-05 ***
+regionNorth America              -1.04930    0.63281  -1.658   0.0978 .  
+regionSub-Saharan Africa         -9.17656    0.62727 -14.629  < 2e-16 ***
+year_c                            0.22362    0.03591   6.227 9.01e-10 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 2.734 on 592 degrees of freedom
+Multiple R-squared:  0.7577,	Adjusted R-squared:  0.7544 
+F-statistic: 231.4 on 8 and 592 DF,  p-value: < 2.2e-16
+
+
+
+MODEL COMPARISON
+Analysis of Variance Table
+
+Model 1: life_expectancy ~ health_expenditure_gdp
+Model 2: life_expectancy ~ health_expenditure_gdp + log_gdp_per_capita + 
+    region + year_c
+  Res.Df     RSS Df Sum of Sq      F    Pr(>F)    
+1    599 13535.4                                  
+2    592  4425.1  7    9110.3 174.12 < 2.2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+
+EFFECT OF EACH CONTROL ON THE HEALTH EXPENDITURE COEFFICIENT
+  Model 1 (no controls)  : 1.2315 
+  + year only            : 1.2362 
+  + region only          : 1.2673 
+  + log GDP only         : 0.0324 
+  Model 2 (all controls) : 0.0921 
+
+Correlation(health expenditure, log GDP per capita): 0.634 
+
+Influential observations above 4/n: 26 
+  row_id      country year health_expenditure_gdp life_expectancy   .cooksd
+1    595 South Africa 2011               4.129141           51.62 0.1269112
+2    594 South Africa 2010               3.991688           51.48 0.1203187
+3    596 South Africa 2012               4.266435           52.08 0.1174180
+4    592 South Africa 2008               3.737090           51.00 0.1076266
+5    597 South Africa 2013               4.399704           52.61 0.1060919
+
+Model 2 coefficient excluding them: 0.2626 

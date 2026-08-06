@@ -1,0 +1,5 @@
+variable,n,mean,sd,min,median,max
+gdp_per_capita,601,29355.63,24756.37,1022.62,22405.64,123678.71
+health_expenditure_gdp,601,5.1,2.28,0.36,5.2,9.3
+life_expectancy,601,76.74,5.52,51,78.74,84.28
+log_gdp_per_capita,601,9.83,1.08,6.93,10.02,11.73
