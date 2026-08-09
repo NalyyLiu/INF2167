@@ -25,8 +25,12 @@ project-root/
 │   ├── 02_clean_health_expenditure.R
 │   ├── 03_clean_life_expectancy.R
 │   ├── 04_clean_control_variables.R
-│   └── 05_merge_data.R
+│   ├── 05_merge_data.R
+│   └── 06_analysis.R
 ├── docs/                     # Dataset documentation
+│   ├── health_dataset_description.md
+│   ├── life_dataset_description.md
+│   └── gdp_dataset_description.md
 ├── output/
 │   ├── figures/
 │   └── tables/
@@ -52,7 +56,7 @@ This project uses three datasets.
 | Indicator | Government Expenditure on Health |
 | Indicator ID | IMF_COFOG_GEL_GF07 |
 | Time period | 2007–2017 |
-| Variable used | Government health expenditure (% of GDP) |
+| Variable used | General government expenditure on health (% of GDP) |
 | Role in analysis | Primary independent variable |
 | Original retrieval date | 2026-06-18 |
 
@@ -71,11 +75,11 @@ https://data360.worldbank.org/en/indicator/IMF_COFOG_GEL_GF07
 | Indicator | Life Expectancy, Years |
 | Indicator ID | WEF_GCIHH_LIFEEXPECT |
 | Time period | 2007–2017 |
-| Variable used | Life expectancy (years) |
+| Variable used | Life expectancy measured in years |
 | Role in analysis | Dependent variable |
 | Retrieval method | Automatically downloaded using `scripts/01_download_data.R` |
 | API endpoint | https://data360api.worldbank.org/data360/data |
-| URL | https://data360.worldbank.org/en/indicator/WEF_GCIHH_LIFEEXPECT |
+| URL | https://data360.worldbank.org/en/indicator/WEF_GCIHH_LIFEEXPECT 
 
 Query parameters:
 
@@ -99,7 +103,8 @@ Query parameters:
 | Role in analysis | Control variable |
 | Retrieval method | Automatically downloaded using `scripts/01_download_data.R` |
 | API endpoint | https://data360api.worldbank.org/data360/data |
-| URL | https://data360.worldbank.org/en/indicator/WB_WDI_NY_GDP_PCAP_CD?view=datatable&minYear=2007&maxYear=2020&recentYear=false|
+| URL | https://data360.worldbank.org/en/indicator/WB_WDI_NY_GDP_PCAP_CD
+|
 
 Query parameters:
 
@@ -200,7 +205,7 @@ The final analytical dataset contains:
 - no duplicate country-year observations;
 - no missing values in the final analytical dataset.
 
-Variables include:
+Key variables include:
 
 - country_code
 - country

@@ -22,7 +22,7 @@ gdp_raw <- read_csv(
 )
 
 
-# 2. Clean GDP per capita data
+# 2. Clean GDP per capita data and create region
 
 gdp_clean <- gdp_raw |>
   filter(
@@ -47,22 +47,10 @@ gdp_clean <- gdp_raw |>
       origin = "iso3c",
       destination = "region"
     )
-  ) |>
-  filter(!is.na(region))
+  )
 
 
-# 3. Check duplicate country-year observations
-
-gdp_duplicates <- gdp_clean |>
-  count(country_code, year) |>
-  filter(n > 1)
-
-if (nrow(gdp_duplicates) > 0) {
-  stop("Duplicate country-year observations remain in the GDP dataset.")
-}
-
-
-# 4. Check unmatched region codes
+# 3. Check unmatched region codes
 
 unmatched_regions <- gdp_clean |>
   filter(is.na(region)) |>
@@ -79,7 +67,24 @@ if (nrow(unmatched_regions) > 0) {
 }
 
 
-# 5. Create output directory
+# 4. Remove observations without a valid region
+
+gdp_clean <- gdp_clean |>
+  filter(!is.na(region))
+
+
+# 5. Check duplicate country-year observations
+
+gdp_duplicates <- gdp_clean |>
+  count(country_code, year) |>
+  filter(n > 1)
+
+if (nrow(gdp_duplicates) > 0) {
+  stop("Duplicate country-year observations remain in the GDP dataset.")
+}
+
+
+# 6. Create output directory
 
 dir.create(
   here("data", "analysis"),
@@ -88,7 +93,7 @@ dir.create(
 )
 
 
-# 6. Save cleaned control-variable dataset
+# 7. Save cleaned control-variable dataset
 
 write_csv(
   gdp_clean,
