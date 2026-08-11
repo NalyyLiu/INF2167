@@ -15,9 +15,43 @@ bibliography: references.bib
 
 # Introduction
 
+Health is a fundamental part of human well-being and an important concern for individuals, governments, and public policy. The World Health Organization defines health as “a state of complete physical, mental and social well-being and not merely the absence of disease or infirmity” (Public Health Agency of Canada, 2017). However, population health outcomes are shaped by a wide range of factors, including income, education, social and physical environments, and access to health services (Public Health Agency of Canada, 2017). Understanding how public healthcare investment relates to population health is therefore important for evaluating health systems and informing public policy.
+
+Government healthcare expenditure represents one way in which countries invest public resources in population health. Greater public spending may improve access to healthcare services, disease prevention, treatment quality, and overall health system capacity, which may contribute to longer life expectancy. At the same time, countries differ substantially in their level of economic development, geographic context, and changes in health outcomes over time. These broader differences may influence both healthcare expenditure and life expectancy.
+
+This project therefore examines the relationship between government healthcare expenditure and life expectancy across countries between 2007 and 2017. Life expectancy is used as a broad measure of population health because it reflects how long people are expected to live under current mortality conditions. Government healthcare expenditure is measured as a percentage of GDP, representing the share of national economic resources allocated by governments to healthcare.
+
 # Relevant Literature
 
+Previous research generally suggests a positive association between healthcare expenditure and population health, although the strength of this relationship varies across settings. Studies of developing European Union countries have found a long-run relationship between public health expenditure and health outcomes. Greater public health expenditure is associated with higher life expectancy and lower infant mortality @onofrei2021. Similar evidence has been reported among OECD countries, where government health expenditure has been positively associated with life expectancy @anwar2023. Together, these findings suggest that greater investment in healthcare may contribute to better population health outcomes, supporting the expectation of a positive relationship between government healthcare expenditure and life expectancy.
+
+However, the literature also shows that higher healthcare spending does not produce the same outcomes across countries. Research in the Middle East and North Africa has found that some countries spend relatively more on healthcare without achieving correspondingly higher life expectancy, suggesting that the allocation and efficiency of healthcare resources may also matter @balkhi2021. Meanwhile, a study of 175 countries also found that the relationship between health spending and life expectancy varies across countries. The benefits of additional health spending differ depending on a country’s level of life expectancy @obrizan2018. These findings indicate that expenditure alone may not fully explain international differences in population health.
+
+One important explanation for these differences is that life expectancy is influenced by broader economic and country-level conditions. Longitudinal research across OECD countries identifies not only healthcare expenditure, but also GDP, healthcare resources, social spending, demographic factors, and other contextual characteristics as important correlates of life expectancy @roffia2023. Anwar et al. also find that income, measured through GDP per capita, is positively associated with life expectancy alongside healthcare expenditure @anwar2023. This suggests that an observed relationship between healthcare expenditure and life expectancy may partly reflect differences in national economic development rather than healthcare expenditure alone.
+
+Therefore, to conclude, healthcare expenditure is generally associated with higher life expectancy, but this relationship is not uniform across countries and regions. Besides, economic and country differences mean that similar levels of healthcare spending are associated with different health outcomes. Much of the existing research focuses on particular groups of countries, such as developing EU countries, the MENA region, or OECD members, although some studies have examined broader international samples.
+
+Building on this literature, our study examines government healthcare expenditure and life expectancy across 64 countries from 2007 to 2017. In addition to estimating the unadjusted relationship between the two variables, we extend the analysis by controlling for GDP per capita,region,and year. This allows us to examine whether the positive association between government healthcare expenditure and life expectancy remains after accounting for differences in economic development, geographic context, and changes over time.
+
 # Research Question and Hypotheses
+
+This research aims to address two research questions by stating two related hypotheses.
+
+RQ1: How is government health expenditure associated with life expectancy across countries from 2007 to 2017?
+
+Based on the expectation that greater public healthcare spending may improve access to healthcare services, disease prevention, treatment quality, and overall health system capacity, we propose the following hypothesis:
+
+H1: Countries with higher government healthcare expenditure as a percentage of GDP tend to have higher life expectancy.
+
+This first research question examines the overall, unadjusted association between government healthcare expenditure and life expectancy.
+
+RQ2: Does the relationship between government healthcare expenditure and life expectancy remain after accounting for GDP per capita, regional differences, and changes over time?
+
+Because national income, geographic differences, and general changes over time may also be associated with population health, the final analysis incorporates GDP per capita, region, and year as control variables. We therefore propose a second hypothesis:
+
+H2: The positive association between government healthcare expenditure and life expectancy will remain after accounting for GDP per capita, region, and year.
+
+Together, the two research questions allow us to compare the overall relationship between government healthcare expenditure and life expectancy with the relationship that remains after accounting for major country-level differences. Because the data are observational, the analysis focuses on associations rather than claiming a direct causal effect of government healthcare expenditure on life expectancy.
 
 # Dataset and Methods
 
@@ -48,5 +82,15 @@ All data acquisition, cleaning, merging, exploratory analysis, and statistical m
 # Results and Findings
 
 # Discussion and Conclusion
+
+The findings suggest that government healthcare expenditure should not be considered alone when comparing life expectancy across countries. Although countries that spend more on public healthcare tend to have higher life expectancy in the unadjusted analysis, this relationship becomes much weaker after accounting for broader country-level differences. This does not mean that healthcare spending is unimportant. Instead, it suggests that population health depends on a wider economic and social context, and that similar levels of healthcare spending may be associated with different outcomes across countries.
+
+The research limitations come from the scope of the research question itself. First, life expectancy is a broad measure of population health. It summarizes mortality conditions but does not capture other important outcomes such as quality of life, disability, access to care, or differences in health across groups within the same country. Second, healthcare spending may affect health outcomes over many years. Spending in one year may therefore not be immediately reflected in life expectancy in that same year. In addition, countries organize and use healthcare resources differently. Two countries with similar spending levels may invest in different services, populations, or types of care, which may lead to different health outcomes.
+
+The study also focuses on country-level averages. These national measures can hide important differences within countries, such as differences by income, age, gender, or location. In addition, the study covers only 2007 to 2017, so the findings describe a specific period and may not fully reflect more recent healthcare systems, technologies, or public health challenges.
+
+Future research could examine more detailed health outcomes in addition to life expectancy, consider possible time lags between healthcare investment and health outcomes, and study how healthcare spending is allocated across different services. More recent data and subgroup-level data could also help explain why the same level of healthcare investment may produce different outcomes across countries and populations.
+
+Overall, our results suggest that the important question is not simply whether countries spend more on healthcare, but also how, where, and under what conditions those resources are used. Healthcare expenditure is one component of population health, but it should be understood in the broader context in which healthcare systems operate.
 
 # References
