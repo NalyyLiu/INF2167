@@ -2,14 +2,41 @@
 title: "Government Health Expenditure and Life Expectancy"
 author:
   - "Naly Liu 1007253482"
-  - "Shawn Li"
+  - "Shawn Li 1010790324"
   - "Jiarui Guo 1007086886"
 format:
   pdf:
     documentclass: article
+    fig-pos: "H"
 editor: visual
 bibliography: references.bib
 ---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(tidyverse)
+library(here)
+library(knitr)
+
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+
+merge_summary <- read_csv(
+  here("output", "tables", "data_merge_summary.csv"),
+  show_col_types = FALSE
+)
+
+summary_stats <- read_csv(
+  here("output", "tables", "table1_summary_stats.csv"),
+  show_col_types = FALSE
+)
+
+regression_results <- read_csv(
+  here("output", "tables", "table2_regression_coefficients.csv"),
+  show_col_types = FALSE
+)
+```
 
 # Abstract
 
@@ -17,7 +44,7 @@ Government healthcare expenditure is often associated with better population hea
 
 # Introduction
 
-Health is a fundamental part of human well-being and an important concern for individuals, governments, and public policy. The World Health Organization defines health as “a state of complete physical, mental and social well-being and not merely the absence of disease or infirmity” (Public Health Agency of Canada, 2017). However, population health outcomes are shaped by a wide range of factors, including income, education, social and physical environments, and access to health services (Public Health Agency of Canada, 2017). Understanding how public healthcare investment relates to population health is therefore important for evaluating health systems and informing public policy.
+Health is a fundamental part of human well-being and an important concern for individuals, governments, and public policy. The World Health Organization defines health as “a state of complete physical, mental and social well-being and not merely the absence of disease or infirmity” [@health_definition]. However, population health outcomes are shaped by a wide range of factors, including income, education, social and physical environments, and access to health services [@health_definition]. Understanding how public healthcare investment relates to population health is therefore important for evaluating health systems and informing public policy.
 
 Government healthcare expenditure represents one way in which countries invest public resources in population health. Greater public spending may improve access to healthcare services, disease prevention, treatment quality, and overall health system capacity, which may contribute to longer life expectancy. At the same time, countries differ substantially in their level of economic development, geographic context, and changes in health outcomes over time. These broader differences may influence both healthcare expenditure and life expectancy.
 
@@ -61,7 +88,7 @@ Together, the two research questions allow us to compare the overall relationshi
 
 This study combines three international datasets to examine the relationship between government healthcare expenditure and life expectancy across countries between 2007 and 2017.
 
-The main explanatory variable was obtained from the World Bank Data360 platform using the International Monetary Fund (IMF) Government Finance Statistics indicator \*\*IMF_COFOG_GEL_GF07 (Government Expenditure on Health)\*\*, which measures general government healthcare expenditure as a percentage of GDP @worldbank_health. The main outcome variable was obtained from the World Bank Data360 indicator \*\*WEF_GCIHH_LIFEEXPECT\*\*, which reports life expectancy measured in years @worldbank_life. To account for differences in national economic development, GDP per capita was obtained from the World Bank World Development Indicators (WDI) using indicator \*\*WB_WDI_NY_GDP_PCAP_CD\*\* @worldbank_gdp. A regional classification variable was additionally generated from ISO3 country codes using the \`countrycode\` R package.
+The main explanatory variable was obtained from the World Bank Data360 platform using the International Monetary Fund (IMF) Government Finance Statistics indicator IMF_COFOG_GEL_GF07 (Government Expenditure on Health), which measures general government healthcare expenditure as a percentage of GDP @worldbank_health. The main outcome variable was obtained from the World Bank Data360 indicator WEF_GCIHH_LIFEEXPECT, which reports life expectancy measured in years @worldbank_life. To account for differences in national economic development, GDP per capita was obtained from the World Bank World Development Indicators (WDI) using indicator WB_WDI_NY_GDP_PCAP_CD @worldbank_gdp. A regional classification variable was additionally generated from ISO3 country codes using the countrycode R package.
 
 The unit of analysis is the country-year. After cleaning and standardizing the three datasets, they were merged using ISO3 country codes and year to construct the final analytical dataset. The final dataset contains 601 country-year observations across 64 countries covering the period from 2007 to 2017.
 
@@ -71,17 +98,207 @@ One limitation of the dataset is that the historical Government Health Expenditu
 
 Data acquisition, cleaning, and merging were performed using reproducible R scripts within an R Project workflow. Life expectancy and GDP per capita data were downloaded directly from the World Bank Data360 platform using documented API requests and stored locally before analysis. The historical Government Health Expenditure dataset (IMF_COFOG_GEL_GF07) was originally downloaded during the project proposal stage. During preparation of the final project, attempts were made to reproduce the original download through both the current World Bank Data360 platform and the IMF Government Finance Statistics (GFS) Data Explorer. Because the historical 2007–2017 observations are no longer publicly accessible, the archived CSV retained from the proposal stage was used with instructor approval. The original data source, indicator information, retrieval process, and verification steps are documented in the project repository.
 
-Each dataset was cleaned separately prior to merging. All datasets were restricted to the common study period of 2007–2017. For the health expenditure dataset, only general government expenditure observations measured as a percentage of GDP were retained. For the life expectancy dataset, observations reported in years were retained. GDP per capita observations were restricted to valid positive values, and the natural logarithm of GDP per capita was calculated because the original variable exhibited substantial right skewness. Country identifiers were standardized using ISO3 country codes, duplicate country-year observations were removed, and a regional classification variable was derived from ISO3 country codes using the \`countrycode\` package.
+Each dataset was cleaned separately prior to merging. All datasets were restricted to the common study period of 2007–2017. For the health expenditure dataset, only general government expenditure observations measured as a percentage of GDP were retained. For the life expectancy dataset, observations reported in years were retained. GDP per capita observations were restricted to valid positive values, and the natural logarithm of GDP per capita was calculated because the original variable exhibited substantial right skewness. Country identifiers were standardized using ISO3 country codes, duplicate country-year observations were removed, and a regional classification variable was derived from ISO3 country codes using the countrycode package.
 
-The cleaned datasets were merged using country code and year. A complete-case analytical dataset was then created by retaining only observations with complete information for all variables included in the regression analysis. The resulting dataset contained 601 country-year observations across 64 countries and was used for all subsequent exploratory analyses and regression models.
+The cleaned datasets were merged using country code and year. A complete-case analytical dataset was then created by retaining only observations with complete information for all variables included in the regression analysis. The resulting dataset contained 601 country-year observations across 64 countries and was used for all subsequent exploratory analyses and regression models. @tbl-dataprep reports the number of observations and countries retained at each stage of this process.
+
+```{r}
+#| label: tbl-dataprep
+#| tbl-cap: "Observations and countries retained at each stage of data preparation"
+
+merge_summary |>
+  rename(
+    Stage = stage,
+    Observations = observations,
+    Countries = countries
+  ) |>
+  kable(format = "latex", booktabs = TRUE, longtable = FALSE)
+```
+
+The health expenditure dataset is the binding constraint on sample size. It contains the fewest countries of the three sources, so merging it with the life expectancy data reduces the sample to 601 country-year observations across 64 countries. Adding GDP per capita removed no further observations, meaning every country-year with expenditure and life expectancy data also had GDP data available.
 
 ## Methods
+
+### Analytical Approach
+
+The analysis proceeds in two stages that correspond to the two research questions. Both stages use linear regression estimated by ordinary least squares on the pooled country-year data.
+
+The first stage estimates the unadjusted association between government healthcare expenditure and life expectancy. This model addresses RQ1 and tests H1:
+
+$$LifeExpectancy_{it} = \beta_0 + \beta_1 HealthExpenditure_{it} + \varepsilon_{it}$$
+
+where $i$ indexes countries and $t$ indexes years. $LifeExpectancy_{it}$ is life expectancy in years, and $HealthExpenditure_{it}$ is government healthcare expenditure as a percentage of GDP. The coefficient $\beta_1$ represents the average difference in life expectancy associated with a one percentage point difference in healthcare expenditure, without accounting for any other country characteristics.
+
+The second stage adds the three control variables. This model addresses RQ2 and tests H2:
+
+$$\begin{aligned}
+LifeExpectancy_{it} = {} & \beta_0 + \beta_1 HealthExpenditure_{it} + \beta_2 \log(GDPperCapita_{it}) \\
+& + \sum_{r} \gamma_r Region_{ri} + \beta_3 Year_{t} + \varepsilon_{it}
+\end{aligned}$$
+
+Comparing $\beta_1$ across the two models shows how much of the unadjusted association remains once broader country-level differences are taken into account.
+
+### Control Variables
+
+Three control variables were selected based on the patterns identified in the literature.
+
+**GDP per capita** is included because national income is associated with both healthcare expenditure and life expectancy, and may therefore account for part of any observed relationship between them [@anwar2023; @roffia2023]. The variable enters in natural logarithm form because raw GDP per capita is strongly right skewed. The logarithmic form also matches the common expectation that a given proportional increase in income is associated with a similar improvement in health outcomes at any income level, rather than a fixed absolute increase.
+
+**Region** is included as a categorical variable to account for geographic and institutional differences that are not captured by income alone, such as differences in health system organization, disease environment, and historical context. Europe and Central Asia serves as the reference category because it contains the largest number of observations in the sample. Each regional coefficient therefore represents the average difference in life expectancy relative to that group.
+
+**Year** is included to account for general improvements in life expectancy over the study period that are common to all countries, such as advances in medical technology. Year is centred on the midpoint of the study period so that the intercept refers to a year within the observed range rather than to year zero.
+
+### Interpretation
+
+The data are observational and the models describe associations rather than causal effects. Countries were not assigned levels of healthcare expenditure, and unmeasured characteristics may be related to both expenditure and life expectancy. A change in the healthcare expenditure coefficient between the two models therefore indicates that the unadjusted association overlaps with the control variables, not that healthcare expenditure causes or fails to cause changes in life expectancy.
 
 ### Software
 
 All data acquisition, cleaning, merging, exploratory analysis, and statistical modelling were conducted in R @Rsoftware2024. Data manipulation and visualization were performed using the tidyverse collection of packages @tidyverse2019, including readr @readr2024, dplyr @dplyr2026, and tibble @tibble2023. Reproducible file paths were managed using here @here2025. Initial data inspection and cleaning used janitor @janitor2024. API-based data retrieval was implemented using httr2 @httr22025, regional classifications were generated using countrycode @countrycode2018, and regression model outputs were summarized using broom @broom2026.
 
 # Results and Findings
+
+## Descriptive Statistics
+
+@tbl-summary reports descriptive statistics for the four continuous variables in the analytical sample of 601 country-year observations.
+
+```{r}
+#| label: tbl-summary
+#| tbl-cap: "Descriptive statistics for the analytical sample (601 country-year observations, 64 countries)"
+
+summary_stats |>
+  mutate(
+    variable = case_when(
+      variable == "gdp_per_capita" ~ "GDP per capita (current US$)",
+      variable == "health_expenditure_gdp" ~ "Health expenditure (% of GDP)",
+      variable == "life_expectancy" ~ "Life expectancy (years)",
+      variable == "log_gdp_per_capita" ~ "Log GDP per capita"
+    )
+  ) |>
+  rename(
+    Variable = variable, N = n, Mean = mean, SD = sd,
+    Min = min, Median = median, Max = max
+  ) |>
+  kable(
+    digits = 2,
+    format = "latex",
+    booktabs = TRUE,
+    longtable = FALSE,
+    format.args = list(big.mark = ",")
+  )
+```
+
+Life expectancy averages 76.74 years and ranges from 51.00 to 84.28 years. Government healthcare expenditure averages 5.10 percent of GDP and ranges from 0.36 to 9.30 percent. GDP per capita is strongly right skewed: the mean of 29,355.63 US dollars exceeds the median of 22,405.64, and the maximum is more than one hundred times the minimum. Taking the natural logarithm produces a much more symmetric variable with a mean of 9.83 and a standard deviation of 1.08, which supports the decision to use the logarithmic form in the regression models.
+
+@fig-distribution shows the distribution of government healthcare expenditure across the sample.
+
+```{r}
+#| label: fig-distribution
+#| fig-cap: "Distribution of government healthcare expenditure as a percentage of GDP"
+
+include_graphics(here("output", "figures", "fig1_expenditure_distribution.png"))
+```
+
+The distribution is spread across the full range rather than concentrated around a single value, with a larger group of observations between roughly 6.5 and 8 percent of GDP and a second group below 3 percent. This spread reflects substantial variation in how much countries allocate to public healthcare and provides useful variation for the regression analysis.
+
+## The Unadjusted Relationship
+
+@fig-scatter plots life expectancy against government healthcare expenditure with a fitted regression line.
+
+```{r}
+#| label: fig-scatter
+#| fig-cap: "Life expectancy and government healthcare expenditure with fitted regression line"
+
+include_graphics(here("output", "figures", "fig2_scatter_fitted.png"))
+```
+
+The fitted line slopes upward, indicating that countries with higher government healthcare expenditure tend to have higher life expectancy. However, the observations are widely scattered around the line. A distinct cluster of observations with life expectancy below 60 years appears at expenditure levels between roughly 3.5 and 5 percent of GDP, well within the middle of the expenditure range. This shows that similar levels of healthcare spending are associated with very different health outcomes, consistent with the literature reviewed earlier.
+
+@fig-region shows how life expectancy varies across the regional groups in the sample.
+
+```{r}
+#| label: fig-region
+#| fig-cap: "Life expectancy by region"
+
+include_graphics(here("output", "figures", "fig3_region_boxplot.png"))
+```
+
+Median life expectancy is broadly similar across East Asia and Pacific, Europe and Central Asia, the Middle East and North Africa, and North America, all sitting near or above 78 years. Sub-Saharan Africa shows a much wider spread extending well below 60 years. This pattern suggests that regional differences account for a meaningful share of the variation in life expectancy and supports including region as a control variable.
+
+## Regression Results
+
+@tbl-regression reports the coefficients from both models.
+
+```{r}
+#| label: tbl-regression
+#| tbl-cap: "Regression results for Model 1 (unadjusted) and Model 2 (with controls)"
+
+regression_results |>
+  mutate(
+    p_value = ifelse(p_value < 0.001, "<0.001", sprintf("%.3f", p_value)),
+    ci = sprintf("[%.2f, %.2f]", conf_low, conf_high),
+    term = str_replace(term, "health_expenditure_gdp", "Health expenditure"),
+    term = str_replace(term, "log_gdp_per_capita", "Log GDP per capita"),
+    term = str_replace(term, "^region", ""),
+    term = str_replace(term, "year_c", "Year (centred)")
+  ) |>
+  select(
+    Model = model, Term = term, Estimate = estimate,
+    SE = std_error, `p` = p_value, `95% CI` = ci
+  ) |>
+  kable(
+    digits = 3,
+    format = "latex",
+    booktabs = TRUE,
+    longtable = FALSE,
+    align = "llrrrr"
+  )
+```
+
+In Model 1, the coefficient on government healthcare expenditure is 1.231 with a standard error of 0.085. The association is positive and statistically significant at any conventional level, with a 95 percent confidence interval of 1.064 to 1.399. A one percentage point higher share of GDP devoted to public healthcare is associated with approximately 1.23 additional years of life expectancy. Model 1 explains about 25.9 percent of the variation in life expectancy.
+
+In Model 2, the same coefficient falls to 0.092 with a standard error of 0.071. The confidence interval of -0.047 to 0.231 includes zero, and the association is not statistically significant at the five percent level. The estimate is roughly one thirteenth of its unadjusted size, and the confidence interval no longer overlaps with the Model 1 interval. Adding the control variables raises the explained variation to about 75.8 percent.
+
+Among the control variables, log GDP per capita has the largest association with life expectancy. Its coefficient of 3.854 is highly significant, indicating that countries with higher national income tend to have substantially higher life expectancy. The regional coefficients are measured relative to Europe and Central Asia. The Sub-Saharan Africa coefficient of -9.177 is the largest in magnitude, indicating that these observations have markedly lower life expectancy even after accounting for income. The Middle East and North Africa and East Asia and Pacific coefficients are positive and significant but much smaller. The centred year coefficient of 0.224 indicates a general improvement of roughly one fifth of a year in life expectancy annually across the sample.
+
+A formal comparison of the two models gives an F statistic of 174.12 on 7 and 592 degrees of freedom with a p-value below 0.001, confirming that the control variables jointly add substantial explanatory power.
+
+## Which Control Explains the Change
+
+To identify which control variable is responsible for the change in the healthcare expenditure coefficient, each control was added to Model 1 separately.
+
+| Specification                  | Health expenditure coefficient |
+|--------------------------------|--------------------------------|
+| Model 1 (no controls)          | 1.232                          |
+| Adding year only               | 1.236                          |
+| Adding region only             | 1.267                          |
+| Adding log GDP per capita only | 0.032                          |
+| Model 2 (all controls)         | 0.092                          |
+
+Adding year or region alone leaves the coefficient essentially unchanged. Adding log GDP per capita alone reduces it to 0.032, close to zero. The change between the two models is therefore driven almost entirely by national income rather than by regional or time differences.
+
+This result is consistent with the correlation of 0.634 between government healthcare expenditure and log GDP per capita in the sample. Wealthier countries tend both to spend a larger share of GDP on public healthcare and to have higher life expectancy. The unadjusted association in Model 1 therefore largely reflects differences in national income that are shared by both variables.
+
+## Model Diagnostics and Robustness
+
+@fig-diagnostics plots the residuals from Model 2 against the fitted values.
+
+```{r}
+#| label: fig-diagnostics
+#| fig-cap: "Residuals against fitted values for Model 2"
+
+include_graphics(here("output", "figures", "fig4_diagnostics.png"))
+```
+
+Residuals are centred around zero across most of the fitted range, which supports the linear specification. However, the spread of residuals is noticeably wider at lower fitted values, with several residuals beyond plus or minus 8 years below a fitted value of 70. This indicates that the model predicts life expectancy less precisely for countries at the lower end of the distribution, and the standard errors for those observations should be interpreted with some caution.
+
+An influence check identified 26 observations with a Cook's distance above the conventional 4/n threshold. The most influential observations are concentrated in a single country, South Africa between 2008 and 2013, which combines moderate healthcare expenditure of roughly 4 percent of GDP with life expectancy near 51 years. Re-estimating Model 2 without these influential observations raises the healthcare expenditure coefficient to 0.263. This is larger than the full-sample estimate but remains far below the unadjusted estimate of 1.231, so the main conclusion does not depend on these observations.
+
+## Hypothesis Assessment
+
+**H1 is supported.** Countries with higher government healthcare expenditure as a percentage of GDP have higher life expectancy in the unadjusted analysis. The coefficient of 1.231 is positive, statistically significant, and consistent with the positive relationship reported in the existing literature.
+
+**H2 is not supported.** The positive association does not remain after accounting for GDP per capita, region, and year. The coefficient falls from 1.231 to 0.092 and is no longer statistically distinguishable from zero. The sequential analysis shows that national income alone accounts for almost all of this change, indicating that the unadjusted relationship largely reflects differences in economic development rather than an independent association between public healthcare spending and life expectancy in this sample.
 
 # Discussion and Conclusion
 
