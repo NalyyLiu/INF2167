@@ -32,12 +32,15 @@ project-root/
 │   ├── life_dataset_description.md
 │   └── gdp_dataset_description.md
 ├── output/
-│   ├── figures/
-│   └── tables/
+│   ├── figures/              # Figures 1 to 4
+│   └── tables/               # Tables used in the report
+├── archive/                  # Earlier working files
+├── Final_project/            # Proposal stage materials
 ├── final_report.qmd
+├── final_report.pdf
 ├── references.bib
 ├── README.md
-└── project.Rproj
+└── INF2167.Rproj
 ```
 
 ---
@@ -79,7 +82,7 @@ https://data360.worldbank.org/en/indicator/IMF_COFOG_GEL_GF07
 | Role in analysis | Dependent variable |
 | Retrieval method | Automatically downloaded using `scripts/01_download_data.R` |
 | API endpoint | https://data360api.worldbank.org/data360/data |
-| URL | https://data360.worldbank.org/en/indicator/WEF_GCIHH_LIFEEXPECT 
+| URL | https://data360.worldbank.org/en/indicator/WEF_GCIHH_LIFEEXPECT |
 
 Query parameters:
 
@@ -103,8 +106,7 @@ Query parameters:
 | Role in analysis | Control variable |
 | Retrieval method | Automatically downloaded using `scripts/01_download_data.R` |
 | API endpoint | https://data360api.worldbank.org/data360/data |
-| URL | https://data360.worldbank.org/en/indicator/WB_WDI_NY_GDP_PCAP_CD
-|
+| URL | https://data360.worldbank.org/en/indicator/WB_WDI_NY_GDP_PCAP_CD |
 
 Query parameters:
 
@@ -173,7 +175,16 @@ Region was generated from ISO3 country codes using the `countrycode` R package. 
 
 # Reproducibility
 
-To reproduce the complete analytical workflow, run the scripts in the following order:
+## Required packages
+
+```r
+install.packages(c("tidyverse", "here", "janitor", "httr2",
+                   "countrycode", "broom", "knitr"))
+```
+
+## Running the workflow
+
+Open `INF2167.Rproj` first so that file paths resolve correctly, then run the scripts in the following order:
 
 ```r
 source("scripts/01_download_data.R")
@@ -181,7 +192,10 @@ source("scripts/02_clean_health_expenditure.R")
 source("scripts/03_clean_life_expectancy.R")
 source("scripts/04_clean_control_variables.R")
 source("scripts/05_merge_data.R")
+source("scripts/06_analysis.R")
 ```
+
+`06_analysis.R` produces all figures and tables used in the report and writes them to `output/figures/` and `output/tables/`. The report is then rendered from `final_report.qmd`, which reads those output files rather than re-running the analysis.
 
 ---
 
@@ -218,6 +232,14 @@ Key variables include:
 
 ---
 
+# Main Finding
+
+In the unadjusted model, government healthcare expenditure is positively and significantly associated with life expectancy, with a coefficient of 1.231 (p < 0.001). After controlling for log GDP per capita, region, and year, the coefficient falls to 0.092 and is no longer statistically significant (p = 0.193). Adding each control separately shows that this change is driven almost entirely by GDP per capita rather than by region or year.
+
+---
+
 # Limitations
 
 GDP per capita and region were included as additional explanatory variables to improve the regression model. However, life expectancy is also influenced by many other factors, including education, healthcare system quality, demographic characteristics, public health policies, and lifestyle factors. These variables are not fully captured in the current model and should be considered when interpreting the results.
+
+The regional groups are also unevenly sized, and the sample is limited to the 64 countries with complete data across all three sources, which restricts how far the findings can be generalized.
