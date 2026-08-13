@@ -3,7 +3,7 @@ title: "Government Health Expenditure and Life Expectancy"
 author:
   - "Naly Liu 1007253482"
   - "Shawn Li"
-  - "Jiarui Guo"
+  - "Jiarui Guo 1007086886"
 format:
   pdf:
     documentclass: article
@@ -12,6 +12,8 @@ bibliography: references.bib
 ---
 
 # Abstract
+
+Government healthcare expenditure is often associated with better population health outcomes, but the strength of this relationship may differ across countries and may reflect broader economic and regional differences. This study examines whether government healthcare expenditure is associated with life expectancy across countries from 2007 to 2017, and whether this relationship remains after accounting for GDP per capita, region, and year. Using 601 country-year observations from 64 countries, we estimate a simple linear regression model to examine the unadjusted relationship and a multiple linear regression model to examine the relationship after including the control variables. The simple model shows a positive and statistically significant association between government healthcare expenditure and life expectancy, supporting H1. However, the association becomes much smaller and is no longer statistically significant in the multiple regression model, so H2 is not supported. Overall, the findings suggest that healthcare expenditure alone does not fully explain cross-country differences in life expectancy and should be understood within a broader economic and national context.
 
 # Introduction
 
