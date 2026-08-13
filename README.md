@@ -6,9 +6,11 @@
 
 ---
 
-# Research Question
+# Research Questions
 
-How does government healthcare expenditure relate to life expectancy across countries between 2007 and 2017?
+**RQ1:** How is government health expenditure associated with life expectancy across countries from 2007 to 2017?
+
+**RQ2:** Does the relationship between government healthcare expenditure and life expectancy remain after accounting for GDP per capita, regional differences, and changes over time?
 
 ---
 
