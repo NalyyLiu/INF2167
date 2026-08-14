@@ -1,7 +1,6 @@
 # ============================================================
 # INF2167 Final Project
-# Script 06: Regression Analysis (Person 2)
-#
+# Script 06: Regression Analysis
 # Input : data/analysis/final_analysis.csv
 # Output: output/tables/table1_summary_stats.csv
 #         output/tables/table2_regression_coefficients.csv
